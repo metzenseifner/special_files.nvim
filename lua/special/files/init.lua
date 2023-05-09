@@ -8,8 +8,8 @@ local action_state = require "telescope.actions.state"
 
 M = {}
 
-M.list_special_files = function(opts)
-  opts = opts or {
+M.opts_resolver = function(opts)
+  return opts or {
     require("telescope.themes").get_dropdown {},
     src = vim.fn.stdpath("data") .. "/jonathans_special_files",
     cwd_to_path = true,
@@ -17,15 +17,20 @@ M.list_special_files = function(opts)
       vim.cmd("tabedit " .. path)
     end
   }
+end
+
+M.list_special_files = function(opts)
+  opts = M.opts_resolver(opts)
   pickers.new(opts, {
     prompt_title = "Jonathan's Special Files",
     -- finder = finders.new_oneshot_job({ "find" }, opts ), -- async external process
     --  finder = finders.new_oneshot_job( vim.tbl_flatten({"find ", {vim.fn.stdpath("data")}}), opts),
     finder = require('telescope._extensions.file_browser.finders')
     .browse_files({
-      path=opts.src,--vim.fn.stdpath"data" .. "/jonathans_special_files",
+      cwd=opts.src,--vim.fn.stdpath"data" .. "/jonathans_special_files",
       depth=1,
-      respect_gitignore=false,
+      hidden=true,
+      --respect_gitignore=false,
       entry_maker = function(entry)end,
     }),
     sorter = conf.file_sorter(opts), --conf.generic_sorter(opts),
