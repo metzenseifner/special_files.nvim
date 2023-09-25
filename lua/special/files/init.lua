@@ -8,7 +8,12 @@ local action_state = require "telescope.actions.state"
 
 M = {}
 
-M.list_special_files = function(opts)
+M.setup = function(opts) 
+  M.opts = opts
+end
+
+M.list_special_files = function()
+  local opts = M.opts
   pickers.new(opts, {
     prompt_title = opts.files.prompt_title,
     -- finder = finders.new_oneshot_job({ "find" }, opts ), -- async external process
