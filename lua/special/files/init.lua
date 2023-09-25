@@ -8,30 +8,14 @@ local action_state = require "telescope.actions.state"
 
 M = {}
 
--- Abstraction between input and usage
--- to allow for validation, transformation, backwards capatibility layer,
--- embellish config, add features that are not yet exposed.
-M.opts_resolver = function(opts)
-  return opts or {
-    require("telescope.themes").get_dropdown {},
-    base_dir = vim.fn.stdpath("data") .. "/special_files",
-    cwd_to_path = true,
-    effect = function(path)
-      vim.cmd("tabedit " .. path)
-    end
-
-  }
-end
-
 M.list_special_files = function(opts)
-  opts = M.opts_resolver(opts)
   pickers.new(opts, {
-    prompt_title = "Jonathan's Special Files",
+    prompt_title = opts.files.prompt_title,
     -- finder = finders.new_oneshot_job({ "find" }, opts ), -- async external process
     --  finder = finders.new_oneshot_job( vim.tbl_flatten({"find ", {vim.fn.stdpath("data")}}), opts),
     finder = require('telescope._extensions.file_browser.finders')
         .browse_files({
-          path = opts.base_dir, --vim.fn.stdpath"data" .. "/jonathans_special_files",
+          path = opts.files.base_dir, --vim.fn.stdpath"data" .. "/jonathans_special_files",
           depth = 1,
           hidden = true,
           entry_maker = function(entry) end,
