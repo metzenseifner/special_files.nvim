@@ -4,7 +4,7 @@ local special = {}
 special.setup = function(opts)
   opts = special.opts_resolver(opts)
   require("telescope.themes").get_dropdown {}
-  require('special.files').setup(opts.files)
+  require('special.files').setup(opts)
 end
 
 -- Abstraction between input and usage
