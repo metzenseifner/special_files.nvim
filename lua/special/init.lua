@@ -1,10 +1,12 @@
-
+local config = require'config'
 local special = {}
 
 special.setup = function(opts)
   opts = special.opts_resolver(opts)
+  config.set_files(opts.files)
+
+  -- TODO parameterize in config
   require("telescope.themes").get_dropdown {}
-  require('special.files').setup(opts)
 end
 
 -- Abstraction between input and usage

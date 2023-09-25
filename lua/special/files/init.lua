@@ -6,14 +6,12 @@ local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 
+local config = require("special.config").values
+
 M = {}
 
-M.setup = function(opts) 
-  M.opts = opts
-end
-
 M.list_special_files = function()
-  local opts = M.opts
+  local opts = config
   pickers.new(opts, {
     prompt_title = opts.files.prompt_title,
     -- finder = finders.new_oneshot_job({ "find" }, opts ), -- async external process
