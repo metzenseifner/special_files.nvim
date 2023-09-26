@@ -1,9 +1,17 @@
-local config = require'config'
 local special = {}
 
+local conf
+
 special.setup = function(opts)
-  opts = special.opts_resolver(opts)
-  config.set_files(opts.files)
+  opts = opts or {}
+  --opts = special.opts_resolver(opts)
+  require'special.config'.set_files(opts.files or {})
+  --conf = require'special.config'.set_files({
+  --  files = {
+  --    base_dir = vim.fn.stdpath("data") .. "/special_files",
+  --    prompt_title = "Special Files"
+  --  }
+  --})
 
   -- TODO parameterize in config
   require("telescope.themes").get_dropdown {}
