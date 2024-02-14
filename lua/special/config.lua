@@ -18,7 +18,6 @@ function config.set_files(files)
   config.files = vim.tbl_deep_extend("keep", files, default_files) --keep leftmost
 
   for k, v in pairs(files) do
-    print(k)
     config.files[k] = v
   end
 
